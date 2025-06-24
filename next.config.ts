@@ -6,8 +6,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/pdfannotate' : '',
-  basePath: process.env.NODE_ENV === 'production' ? '/pdfannotate' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/douroannotate' : '',
+  basePath: process.env.NODE_ENV === 'production' ? '/douroannotate' : '',
 };
 
 export default nextConfig;
