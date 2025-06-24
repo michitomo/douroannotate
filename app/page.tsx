@@ -16,7 +16,8 @@ export default function Home() {
     // Load PDF from URL parameter
     const pdfParam = params.get('pdf');
     if (pdfParam) {
-      setPdfUrl(`/${pdfParam}`);
+      const basePath = window.location.pathname.includes('/douroannotate') ? '/douroannotate' : '';
+      setPdfUrl(`${basePath}/${pdfParam}`);
     }
     
     // Load annotations from URL parameter

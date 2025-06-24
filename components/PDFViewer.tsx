@@ -9,7 +9,13 @@ import fontkit from '@pdf-lib/fontkit';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
-pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+// Use dynamic worker path that respects basePath
+if (typeof window !== 'undefined') {
+  const basePath = window.location.pathname.includes('/douroannotate') ? '/douroannotate' : '';
+  pdfjs.GlobalWorkerOptions.workerSrc = `${basePath}/pdf.worker.min.mjs`;
+} else {
+  pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
+}
 
 interface PDFViewerProps {
   file?: File | null;
