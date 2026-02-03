@@ -133,16 +133,16 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ file, url, annotations, onAnnotat
       try {
         // Try to use custom font for Unicode support
         pdfDoc.registerFontkit(fontkit);
-        // Use local OTF file from public directory to ensure availability
+        // Use local TrueType font file from public directory to ensure availability
         // Dynamic path handling for GitHub Pages deployment with basePath
         const basePath = typeof window !== 'undefined' && window.location.pathname.includes('/douroannotate') 
           ? '/douroannotate' 
           : '';
-        const fontUrl = `${basePath}/NotoSerifJP-Regular.otf`;
+        const fontUrl = `${basePath}/NotoSansJP-Regular.ttf`;
         const fontBytes = await fetch(fontUrl).then(res => res.arrayBuffer());
-        // Use default subset behavior (true) for better CJK character support
+        // Use default subset behavior for better CJK character support with pdf-fontkit
         font = await pdfDoc.embedFont(fontBytes);
-        console.log('Using custom Noto Serif JP font');
+        console.log('Using custom Noto Sans JP font');
       } catch (fontError) {
         // Fallback to standard font
         console.error('Failed to load custom font, using standard font:', fontError);
