@@ -134,6 +134,8 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ file, url, annotations, onAnnotat
         // Try to use custom font for Unicode support
         pdfDoc.registerFontkit(fontkit);
         // Use OTF format from Google Fonts CDN as pdf-lib doesn't support WOFF/WOFF2
+        // Note: v30 is a stable version from Google Fonts. If font fails to load,
+        // the code will fall back to standard Helvetica font automatically.
         const fontUrl = 'https://fonts.gstatic.com/s/notoserifjp/v30/xn7mYHs72GKoTvER4Gn3b5eMZBaPRkgfU8fEwb0.otf';
         const fontBytes = await fetch(fontUrl).then(res => res.arrayBuffer());
         font = await pdfDoc.embedFont(fontBytes, { subset: true });
