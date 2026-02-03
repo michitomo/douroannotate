@@ -5,7 +5,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import Draggable from 'react-draggable';
 import { Annotation } from '@/types/annotation';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
-import fontkit from '@pdf-lib/fontkit';
+import fontkit from 'pdf-fontkit';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
@@ -133,12 +133,15 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ file, url, annotations, onAnnotat
       try {
         // Try to use custom font for Unicode support
         pdfDoc.registerFontkit(fontkit);
-        // Use OTF format from Google Fonts CDN as pdf-lib doesn't support WOFF/WOFF2
-        // Note: v30 is a stable version from Google Fonts. If font fails to load,
-        // the code will fall back to standard Helvetica font automatically.
-        const fontUrl = 'https://fonts.gstatic.com/s/notoserifjp/v30/xn7mYHs72GKoTvER4Gn3b5eMZBaPRkgfU8fEwb0.otf';
+        // Use local OTF file from public directory to ensure availability
+        // Dynamic path handling for GitHub Pages deployment with basePath
+        const basePath = typeof window !== 'undefined' && window.location.pathname.includes('/douroannotate') 
+          ? '/douroannotate' 
+          : '';
+        const fontUrl = `${basePath}/NotoSerifJP-Regular.otf`;
         const fontBytes = await fetch(fontUrl).then(res => res.arrayBuffer());
-        font = await pdfDoc.embedFont(fontBytes, { subset: false });
+        // Use default subset behavior (true) for better CJK character support
+        font = await pdfDoc.embedFont(fontBytes);
         console.log('Using custom Noto Serif JP font');
       } catch (fontError) {
         // Fallback to standard font
