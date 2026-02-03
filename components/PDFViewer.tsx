@@ -134,8 +134,10 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ file, url, annotations, onAnnotat
         // Try to use custom font for Unicode support
         pdfDoc.registerFontkit(fontkit);
         // Use local TrueType font file from public directory to ensure availability
-        // Dynamic path handling for GitHub Pages deployment with basePath
-        const basePath = typeof window !== 'undefined' && window.location.pathname.includes('/douroannotate') 
+        // The font path respects Next.js basePath configured in next.config.ts
+        // In development: /NotoSansJP-Regular.ttf
+        // In production (GitHub Pages): /douroannotate/NotoSansJP-Regular.ttf
+        const basePath = typeof window !== 'undefined' && window.location.pathname.startsWith('/douroannotate') 
           ? '/douroannotate' 
           : '';
         const fontUrl = `${basePath}/NotoSansJP-Regular.ttf`;
