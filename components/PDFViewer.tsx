@@ -138,7 +138,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ file, url, annotations, onAnnotat
         // the code will fall back to standard Helvetica font automatically.
         const fontUrl = 'https://fonts.gstatic.com/s/notoserifjp/v30/xn7mYHs72GKoTvER4Gn3b5eMZBaPRkgfU8fEwb0.otf';
         const fontBytes = await fetch(fontUrl).then(res => res.arrayBuffer());
-        font = await pdfDoc.embedFont(fontBytes, { subset: true });
+        font = await pdfDoc.embedFont(fontBytes, { subset: false });
         console.log('Using custom Noto Serif JP font');
       } catch (fontError) {
         // Fallback to standard font
